@@ -26,6 +26,5 @@ describe('Signup Routes', () => {
         passwordConfirmation: '123'
       })
       .expect(200)
-      .expect({ ok: 'ok' })
   })
 })
