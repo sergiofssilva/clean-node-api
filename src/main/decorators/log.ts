@@ -12,6 +12,6 @@ export class LogControllerDecorator implements Controller {
     if (httpResponse.statusCode === 500) {
       // TODO
     }
-    return httpResponse
+    return null
   }
 }
