@@ -21,7 +21,7 @@ export class LoginController implements Controller {
       return await new Promise(resolve => { resolve(badRequest(new MissingParamError('password'))) })
     }
     if (!this.emailValidator.isValid(email)) {
-      return await new Promise(resolve => { resolve(badRequest(new InvalidParamError('password'))) })
+      return await new Promise(resolve => { resolve(badRequest(new InvalidParamError('email'))) })
     }
   }
 }
