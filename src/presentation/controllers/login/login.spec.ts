@@ -6,22 +6,25 @@ import { LoginController } from './login'
 
 interface sutTypes {
   sut: LoginController
-  emailValidatorStub: EmailValidatorStub
-}
-
-class EmailValidatorStub implements EmailValidator {
-  isValid (email: string): boolean {
-    return true
-  }
+  emailValidatorStub: EmailValidator
 }
 
 const makeSut = (): sutTypes => {
-  const emailValidatorStub = new EmailValidatorStub()
+  const emailValidatorStub = makeEmailValidatorStub()
   const sut = new LoginController(emailValidatorStub)
   return {
     sut,
     emailValidatorStub
   }
+}
+
+const makeEmailValidatorStub = (): EmailValidator => {
+  class EmailValidatorStub implements EmailValidator {
+    isValid (email: string): boolean {
+      return true
+    }
+  }
+  return new EmailValidatorStub()
 }
 
 describe('Login Controller', () => {
