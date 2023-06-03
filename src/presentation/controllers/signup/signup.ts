@@ -16,14 +16,10 @@ export class SignUpController implements Controller {
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const { body } = httpRequest
+      const { name, email, password } = body
       const error = this.validation.validate(body)
       if (error) {
         return badRequest(error)
-      }
-
-      const { name, email, password, passwordConfirmation } = body
-      if (password !== passwordConfirmation) {
-        return badRequest(new InvalidParamError('passwordConfirmation'))
       }
       const isValid = this.emailValidator.isValid(email)
       if (!isValid) {
