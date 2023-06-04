@@ -8,17 +8,17 @@ describe('DbAuthentication Usecase', () => {
   interface SutTypes {
     sut: DbAuthentication
     loadAccountByEmailRepositoryStub: LoadAccountByEmailRepository
-    loadHashComparerStub: HashComparer
+    hashComparerStub: HashComparer
   }
 
   const makeSut = (): SutTypes => {
     const loadAccountByEmailRepositoryStub = makeLoadAccountByEmailRepository()
-    const loadHashComparerStub = makeHashComparer()
-    const sut = new DbAuthentication(loadAccountByEmailRepositoryStub, loadHashComparerStub)
+    const hashComparerStub = makeHashComparer()
+    const sut = new DbAuthentication(loadAccountByEmailRepositoryStub, hashComparerStub)
     return {
       sut,
       loadAccountByEmailRepositoryStub,
-      loadHashComparerStub
+      hashComparerStub
     }
   }
 
@@ -74,16 +74,23 @@ describe('DbAuthentication Usecase', () => {
   })
 
   test('Should call HashComparer with correct values', async () => {
-    const { sut, loadHashComparerStub } = makeSut()
-    const compareSpy = jest.spyOn(loadHashComparerStub, 'compare')
+    const { sut, hashComparerStub } = makeSut()
+    const compareSpy = jest.spyOn(hashComparerStub, 'compare')
     await sut.auth(makeFakeAuthentication())
     expect(compareSpy).toHaveBeenCalledWith(makeFakeAuthentication().password, makeFakeAccount().password)
   })
 
   test('Should throw if HashComparer throws', async () => {
-    const { sut, loadHashComparerStub } = makeSut()
-    jest.spyOn(loadHashComparerStub, 'compare').mockReturnValueOnce(new Promise((resolve, reject) => { reject(new Error()) }))
+    const { sut, hashComparerStub } = makeSut()
+    jest.spyOn(hashComparerStub, 'compare').mockReturnValueOnce(new Promise((resolve, reject) => { reject(new Error()) }))
     const promise = sut.auth(makeFakeAuthentication())
     await expect(promise).rejects.toThrow()
+  })
+
+  test('Should return null if HashComparer fails', async () => {
+    const { sut, hashComparerStub } = makeSut()
+    jest.spyOn(hashComparerStub, 'compare').mockReturnValueOnce(new Promise(resolve => { resolve(false) }))
+    const accessToken = await sut.auth(makeFakeAuthentication())
+    expect(accessToken).toBeNull()
   })
 })
