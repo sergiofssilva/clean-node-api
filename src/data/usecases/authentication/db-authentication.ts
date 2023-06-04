@@ -8,7 +8,11 @@ export class DbAuthentication implements Authentication {
   private readonly hashComparer: HashComparer
   private readonly tokenGenerator: TokenGenerator
 
-  constructor (loadAccountByEmailRepository: LoadAccountByEmailRepository, hashComparer: HashComparer, tokenGenerator: TokenGenerator) {
+  constructor (
+    loadAccountByEmailRepository: LoadAccountByEmailRepository,
+    hashComparer: HashComparer,
+    tokenGenerator: TokenGenerator
+  ) {
     this.loadAccountByEmailRepository = loadAccountByEmailRepository
     this.hashComparer = hashComparer
     this.tokenGenerator = tokenGenerator
@@ -20,8 +24,8 @@ export class DbAuthentication implements Authentication {
       const { id, password } = account
       const match = await this.hashComparer.compare(authentication.password, password)
       if (match) {
-        const tokenAccess = await this.tokenGenerator.generate(id)
-        return tokenAccess
+        const accessToken = await this.tokenGenerator.generate(id)
+        return accessToken
       }
     }
     return null
