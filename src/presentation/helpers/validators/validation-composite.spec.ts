@@ -1,6 +1,6 @@
 import { InvalidParamError } from './../../errors/invalid-param-error'
 import { MissingParamError } from './../../errors/missing-param-error'
-import type { Validation } from './validation'
+import type { Validation } from '../../protocols/validation'
 import { ValidationComposite } from './validation-composite'
 
 const makeValidation = (): Validation => {

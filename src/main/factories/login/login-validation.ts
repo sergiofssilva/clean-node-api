@@ -2,7 +2,7 @@ import { EmailValidation } from './../../../presentation/helpers/validators/emai
 import { RequiredFieldValidation } from './../../../presentation/helpers/validators/required-field-validation'
 import { EmailValidatorAdapter } from './../../../utils/email-validator-adapter'
 import { ValidationComposite } from './../../../presentation/helpers/validators/validation-composite'
-import type { Validation } from '../../../presentation/helpers/validators/validation'
+import type { Validation } from '../../../presentation/protocols/validation'
 
 export const makeLoginValidation = (): ValidationComposite => {
   const validations: Validation [] = []
