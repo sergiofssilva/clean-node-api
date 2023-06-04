@@ -1,4 +1,4 @@
-import type { LogErrorRepository } from './../../data/protocols/log-error-repository'
+import type { LogErrorRepository } from './../../data/protocols/db/log-error-repository'
 import type { Controller, HttpRequest, HttpResponse } from './../../presentation/protocols'
 
 export class LogControllerDecorator implements Controller {
