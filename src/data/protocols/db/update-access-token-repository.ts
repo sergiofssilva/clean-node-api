@@ -1,3 +1,3 @@
 export interface UpdateAccessTokeRepository {
-  update (id: string, tokenAccess: string): Promise<void>
+  updateAccessToken (id: string, tokenAccess: string): Promise<void>
 }
