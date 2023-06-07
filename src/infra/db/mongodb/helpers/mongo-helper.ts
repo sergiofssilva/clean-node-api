@@ -21,11 +21,20 @@ export const MongoHelper = {
     return this.client.db().collection(name)
   },
 
-  map (collection: any, result: InsertOneResult): any {
+  insertMap (collection: any, result: InsertOneResult): any {
     const { _id, ...collectionWithoutId } = collection
     return {
       id: result.insertedId.toString(),
       ...collectionWithoutId
     }
+  },
+
+  map (collection: any): any {
+    const { _id, ...collectionWithoutId } = collection
+    return {
+      id: _id,
+      ...collectionWithoutId
+    }
   }
+
 }
