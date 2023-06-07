@@ -1,4 +1,4 @@
-import { EmailValidation, RequiredFieldValidation, CompareFieldsValidation, ValidationComposite } from './../../../presentation/helpers/validators'
+import { EmailValidation, RequiredFieldValidation, CompareFieldsValidation, ValidationComposite } from '../../../presentation/helpers/validators'
 import type { Validation } from '../../../presentation/protocols/validation'
 import { EmailValidatorAdapter } from '../../../utils/email-validator-adapter'
 
