@@ -61,7 +61,7 @@ describe('DbAuthentication Usecase', () => {
 
   const makeUpdateAccessTokenRepository = (): UpdateAccessTokeRepository => {
     class UpdateAccessTokenRepositoryStub implements UpdateAccessTokeRepository {
-      async updateAccessToken (id: string, tokenAccess: string): Promise<void> {
+      async updateAccessToken (id: string, token: string): Promise<void> {
       }
     }
     return new UpdateAccessTokenRepositoryStub()
