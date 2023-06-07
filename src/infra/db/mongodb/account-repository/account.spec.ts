@@ -23,7 +23,7 @@ describe('Account Mongo Repository', () => {
     return new AccountMongoRepository()
   }
 
-  const makeFakeAddAccount = (): AddAccountModel => ({
+  const makeFakeAddAccountModel = (): AddAccountModel => ({
     name: 'any_name',
     email: 'any_email@mail.com',
     password: 'any_password'
@@ -31,7 +31,7 @@ describe('Account Mongo Repository', () => {
 
   test('Should return an account on add success', async () => {
     const sut = makeSut()
-    const account = await sut.add(makeFakeAddAccount())
+    const account = await sut.add(makeFakeAddAccountModel())
     expect(account).toBeTruthy()
     expect(account.id).toBeTruthy()
     expect(account.name).toBe('any_name')
@@ -41,12 +41,18 @@ describe('Account Mongo Repository', () => {
 
   test('Should return an account on loadByEmail success', async () => {
     const sut = makeSut()
-    await accountCollection.insertOne(makeFakeAddAccount())
+    await accountCollection.insertOne(makeFakeAddAccountModel())
     const account = await sut.loadByEmail('any_email@mail.com')
     expect(account).toBeTruthy()
     expect(account.id).toBeTruthy()
     expect(account.name).toBe('any_name')
     expect(account.email).toBe('any_email@mail.com')
     expect(account.password).toBe('any_password')
+  })
+
+  test('Should return null if loadByEmail fails', async () => {
+    const sut = makeSut()
+    const account = await sut.loadByEmail('any_email@mail.com')
+    expect(account).toBeFalsy()
   })
 })
