@@ -10,7 +10,7 @@ import { makeLoginValidation } from './login-validation-factory'
 import { LogMongoRepository } from '../../../infra/db/mongodb/log/log-mongo-repository'
 import env from '../../config/env'
 
-export const makeLoginFactory = (): Controller => {
+export const makeLoginController = (): Controller => {
   const salt = 12
   const secret = env.jwtSecret
   const accountMongoRepository = new AccountMongoRepository()
