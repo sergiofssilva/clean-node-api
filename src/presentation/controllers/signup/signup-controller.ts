@@ -1,5 +1,4 @@
-import type { Authentication } from './../../../domain/usecases/authentication'
-import type { HttpRequest, HttpResponse, Controller, AddAccount, Validation } from './signup-controller-protocols'
+import type { HttpRequest, HttpResponse, Controller, AddAccount, Validation, Authentication } from './signup-controller-protocols'
 import { badRequest, serverError, ok } from '../../helpers/http/http-helper'
 
 export class SignUpController implements Controller {
