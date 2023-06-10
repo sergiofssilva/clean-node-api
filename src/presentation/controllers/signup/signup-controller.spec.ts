@@ -25,7 +25,7 @@ const makeValidation = (): Validation => {
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
     async auth (authentication: AuthenticationModel): Promise<string> {
-      return await new Promise(resolve => { resolve(null as any) })
+      return await new Promise(resolve => { resolve('any_token') })
     }
   }
   return new AuthenticationStub()
@@ -90,12 +90,6 @@ describe('SignUp Controller', () => {
     expect(httpResponse).toEqual(serverError(new ServerError(null as any)))
   })
 
-  test('Should return 200 if valid data is provided', async () => {
-    const { sut } = makeSut()
-    const httpResponse = await sut.handle(makeFakeRequest())
-    expect(httpResponse).toEqual(ok(makeFakeAccount()))
-  })
-
   test('Should call Validation with correct value', async () => {
     const { sut, validationStub } = makeSut()
     const addSpy = jest.spyOn(validationStub, 'validate')
@@ -129,5 +123,11 @@ describe('SignUp Controller', () => {
     })
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  test('Should return 200 if valid credentials are provided', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }))
   })
 })
