@@ -3,12 +3,13 @@ import type { Collection } from 'mongodb'
 import type { AddAccountModel } from '../../../../domain/usecases/add-account'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { AccountMongoRepository } from './account-mongo-repository'
+import env from '../../../../main/config/env'
 
 let accountCollection: Collection
 
 describe('Account Mongo Repository', () => {
   beforeAll(async () => {
-    await MongoHelper.connect(process.env.MONGO_URL)
+    await MongoHelper.connect(env.mongoUrl)
   })
 
   afterAll(async () => {
@@ -63,6 +64,6 @@ describe('Account Mongo Repository', () => {
     await sut.updateAccessToken(result.insertedId.toString(), 'any_token')
     const account = await accountCollection.findOne<AccountModel>({ _id: result.insertedId })
     expect(account).toBeTruthy()
-    expect(account.accessToken).toBe('any_token')
+    expect(account?.accessToken).toBe('any_token')
   })
 })

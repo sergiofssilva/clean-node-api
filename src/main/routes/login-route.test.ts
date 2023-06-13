@@ -1,6 +1,7 @@
 import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
 import request from 'supertest'
 import app from '../config/app'
+import env from '../../main/config/env'
 
 const makeSignUpAccount = (): any => ({
   name: 'Sergio',
@@ -11,7 +12,7 @@ const makeSignUpAccount = (): any => ({
 
 describe('Login Routes', () => {
   beforeAll(async () => {
-    await MongoHelper.connect(process.env.MONGO_URL)
+    await MongoHelper.connect(env.mongoUrl)
   })
 
   afterAll(async () => {
