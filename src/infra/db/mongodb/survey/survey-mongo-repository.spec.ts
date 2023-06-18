@@ -29,7 +29,8 @@ describe('SurveyMongoRepository', () => {
     answers: [{
       image: 'any_image',
       answer: 'any_answer'
-    }]
+    }],
+    date: new Date()
   })
 
   test('Should add a survey on add success', async () => {
