@@ -10,6 +10,15 @@ const makeSut = (): SurveyMongoRepository => {
   return new SurveyMongoRepository()
 }
 
+const makeFakeSurveyData = (): AddSurveyModel => ({
+  question: 'any_question',
+  answers: [{
+    image: 'any_image',
+    answer: 'any_answer'
+  }],
+  date: new Date()
+})
+
 describe('SurveyMongoRepository', () => {
   beforeAll(async () => {
     await MongoHelper.connect(env.mongoUrl)
@@ -22,15 +31,6 @@ describe('SurveyMongoRepository', () => {
   beforeEach(async () => {
     surveyCollection = await MongoHelper.getCollection('surveys')
     await surveyCollection.deleteMany({})
-  })
-
-  const makeFakeSurveyData = (): AddSurveyModel => ({
-    question: 'any_question',
-    answers: [{
-      image: 'any_image',
-      answer: 'any_answer'
-    }],
-    date: new Date()
   })
 
   describe('add()', () => {
