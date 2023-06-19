@@ -23,6 +23,16 @@ const makeFakeAddAccountModel = (): AddAccountModel => ({
 let surveyCollection: Collection
 let accountCollection: Collection
 
+const makeAccessToken = async (): Promise<string> => {
+  const response = await accountCollection.insertOne({
+    ...makeFakeAddAccountModel(),
+    role: 'admin'
+  })
+  const accessToken = sign(response.insertedId.toString(), env.jwtSecret)
+  await accountCollection.updateOne({ _id: response.insertedId }, { $set: { accessToken } })
+  return accessToken
+}
+
 describe('Survey Routes', () => {
   beforeAll(async () => {
     await MongoHelper.connect(env.mongoUrl)
@@ -48,12 +58,7 @@ describe('Survey Routes', () => {
     })
 
     test('Should return 204 on add survey with valid accessToken', async () => {
-      const response = await accountCollection.insertOne({
-        ...makeFakeAddAccountModel(),
-        role: 'admin'
-      })
-      const accessToken = sign(response.insertedId.toString(), env.jwtSecret)
-      await accountCollection.updateOne({ _id: response.insertedId }, { $set: { accessToken } })
+      const accessToken = await makeAccessToken()
       await request(app)
         .post('/api/survey')
         .set('x-access-token', accessToken)
@@ -70,9 +75,7 @@ describe('Survey Routes', () => {
     })
 
     test('Should return 200 on load surveys with valid accessToken', async () => {
-      const response = await accountCollection.insertOne(makeFakeAddAccountModel())
-      const accessToken = sign(response.insertedId.toString(), env.jwtSecret)
-      await accountCollection.updateOne({ _id: response.insertedId }, { $set: { accessToken } })
+      const accessToken = await makeAccessToken()
       await surveyCollection.insertOne(makeFakeSurveyData())
       await request(app)
         .get('/api/survey')
