@@ -1,8 +1,8 @@
-import type { AccountModel } from '../../domain/models/account'
-import { ok, serverError } from '../../presentation/helpers/http/http-helper'
-import type { HttpRequest, HttpResponse, Controller } from '../../presentation/protocols'
 import { LogControllerDecorator } from './log-controller-decorator'
-import type { LogErrorRepository } from '../../data/protocols/db/log/log-error-repository'
+import { ok, serverError } from '@/presentation/helpers/http/http-helper'
+import type { HttpRequest, HttpResponse, Controller } from '@/presentation/protocols'
+import type { LogErrorRepository } from '@/data/protocols/db/log/log-error-repository'
+import type { AccountModel } from '@/domain/models/account'
 
 interface SutTypes {
   sut: LogControllerDecorator

@@ -1,8 +1,8 @@
-import type { AddSurveyModel } from './../../../../domain/usecases/add-survey'
-import { SurveyMongoRepository } from './survey-mongo-repository'
-import type { Collection } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo-helper'
-import env from '../../../../main/config/env'
+import { SurveyMongoRepository } from './survey-mongo-repository'
+import type { AddSurveyModel } from '@/domain/usecases/add-survey'
+import env from '@/main/config/env'
+import type { Collection } from 'mongodb'
 
 let surveyCollection: Collection
 

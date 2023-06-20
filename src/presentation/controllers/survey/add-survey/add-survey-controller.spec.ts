@@ -1,7 +1,7 @@
-import { badRequest, noContent, serverError } from './../../../helpers/http/http-helper'
-import { MissingParamError } from './../../../errors/missing-param-error'
 import type { HttpRequest, Validation, AddSurvey, AddSurveyModel } from './add-survey-controller-protocols'
 import { AddSurveyController } from './add-survey-controller'
+import { badRequest, noContent, serverError } from '@/presentation/helpers/http/http-helper'
+import { MissingParamError } from '@/presentation/errors/missing-param-error'
 import MockDate from 'mockdate'
 
 const makeValidation = (): Validation => {

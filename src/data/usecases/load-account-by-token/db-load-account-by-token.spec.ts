@@ -1,7 +1,7 @@
-import type { AccountModel } from './../../../domain/models/account'
-import type { Decrypter } from '../../protocols/criptography/decrypter'
 import { DbLoadAccountByToken } from './db-load-acount-by-token'
-import type { LoadAccountByTokenRepository } from '../../protocols/db/account/load-account-by-token-repository'
+import type { Decrypter } from '@/data/protocols/criptography/decrypter'
+import type { LoadAccountByTokenRepository } from '@/data/protocols/db/account/load-account-by-token-repository'
+import type { AccountModel } from '@/domain/models/account'
 
 const makeDecrypter = (): Decrypter => {
   class DecrypterStub implements Decrypter {

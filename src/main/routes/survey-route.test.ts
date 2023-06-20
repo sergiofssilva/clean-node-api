@@ -1,9 +1,9 @@
-import type { AddAccountModel } from './../../domain/usecases/add-account'
-import type { Collection } from 'mongodb'
-import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
+import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
+import type { AddAccountModel } from '@/domain/usecases/add-account'
 import request from 'supertest'
-import app from '../config/app'
-import env from '../config/env'
+import app from '@/main/config/app'
+import env from '@/main/config/env'
+import type { Collection } from 'mongodb'
 import { sign } from 'jsonwebtoken'
 
 const makeFakeSurveyData = (): any => ({

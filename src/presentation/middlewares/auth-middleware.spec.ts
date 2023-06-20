@@ -1,7 +1,7 @@
 import type { AccountModel, HttpRequest, LoadAccountByToken } from './auth-middleware-protocols'
-import { AccessDeniedError, ServerError } from './../errors'
-import { forbidden, ok, serverError } from './../helpers/http/http-helper'
 import { AuthMiddleware } from './auth-middleware'
+import { AccessDeniedError, ServerError } from '@/presentation/errors'
+import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 
 const makeLoadAccountByToken = (): LoadAccountByToken => {
   class LoadAccountByTokenStub implements LoadAccountByToken {

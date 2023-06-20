@@ -1,7 +1,7 @@
-import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
+import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
+import app from '@/main/config/app'
+import env from '@/main/config/env'
 import request from 'supertest'
-import app from '../config/app'
-import env from '../../main/config/env'
 
 const makeSignUpAccount = (): any => ({
   name: 'Sergio',
