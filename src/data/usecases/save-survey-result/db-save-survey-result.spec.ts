@@ -25,7 +25,7 @@ const makeSut = (): SutTypes => {
   }
 }
 
-const makeFakeSaveSurveyResult = (): SaveSurveyResultModel => ({
+const makeFakeSurveyResultData = (): SaveSurveyResultModel => ({
   surveyId: 'survey_id',
   accountId: 'account_id',
   answer: 'any_answer',
@@ -33,7 +33,7 @@ const makeFakeSaveSurveyResult = (): SaveSurveyResultModel => ({
 })
 
 const makeFakeSurveyResult = (): SurveyResultModel => ({
-  ...makeFakeSaveSurveyResult(),
+  ...makeFakeSurveyResultData(),
   id: 'any_id'
 })
 
@@ -49,7 +49,15 @@ describe('DbSaveSurveyResult Usecase', () => {
   test('Should call SaveSurveyResultRepository with correct value', async () => {
     const { sut, saveSurveyResultRepositoryStub } = makeSut()
     const saveSpy = jest.spyOn(saveSurveyResultRepositoryStub, 'save')
-    await sut.save(makeFakeSaveSurveyResult())
-    expect(saveSpy).toHaveBeenCalledWith(makeFakeSaveSurveyResult())
+    const surveyResultData = makeFakeSurveyResultData()
+    await sut.save(surveyResultData)
+    expect(saveSpy).toHaveBeenCalledWith(surveyResultData)
+  })
+
+  test('Should return a SurveyResult on succes', async () => {
+    const { sut } = makeSut()
+    const surveyResultData = makeFakeSurveyResultData()
+    const surveyResult = await sut.save(surveyResultData)
+    expect(surveyResult).toEqual(makeFakeSurveyResult())
   })
 })
