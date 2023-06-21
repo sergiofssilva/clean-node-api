@@ -1,5 +1,5 @@
-import { MongoHelper } from '../helpers/mongo-helper'
 import { SurveyMongoRepository } from './survey-mongo-repository'
+import { MongoHelper } from '../helpers/mongo-helper'
 import type { AddSurveyModel } from '@/domain/usecases/add-survey'
 import env from '@/main/config/env'
 import type { Collection } from 'mongodb'
@@ -58,10 +58,19 @@ describe('SurveyMongoRepository', () => {
       expect(surveys[1].question).toBe('other_question')
     })
 
-    test('Should load empty list surveys on success', async () => {
+    test('Should load empty list surveys if no records is found', async () => {
       const sut = makeSut()
       const surveys = await sut.loadAll()
       expect(surveys.length).toBe(0)
+    })
+  })
+
+  describe('loadById', () => {
+    test('Should load a survey by an id', async () => {
+      const result = await surveyCollection.insertOne(makeFakeSurveyData())
+      const sut = makeSut()
+      const survey = await sut.loadById(result.insertedId.toString())
+      expect(survey).toBeTruthy()
     })
   })
 })
