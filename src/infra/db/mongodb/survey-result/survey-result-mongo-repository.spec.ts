@@ -1,9 +1,9 @@
 import { SurveyResultMongoRepository } from './survey-result-mongo-repository'
 import { MongoHelper } from '../helpers/mongo-helper'
 import env from '@/main/config/env'
-import type { SaveSurveyResultModel } from '@/domain/usecases/save-survey-result'
-import type { AddSurveyModel } from '@/domain/usecases/add-survey'
-import type { AddAccountModel } from '@/domain/usecases/add-account'
+import type { SaveSurveyResultModel } from '@/domain/usecases/survey-result/save-survey-result'
+import type { AddSurveyModel } from '@/domain/usecases/survey/add-survey'
+import type { AddAccountModel } from '@/domain/usecases/account/add-account'
 import type { Collection } from 'mongodb'
 
 let surveyCollection: Collection

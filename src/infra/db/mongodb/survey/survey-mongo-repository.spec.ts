@@ -1,6 +1,6 @@
 import { SurveyMongoRepository } from './survey-mongo-repository'
 import { MongoHelper } from '../helpers/mongo-helper'
-import type { AddSurveyModel } from '@/domain/usecases/add-survey'
+import type { AddSurveyModel } from '@/domain/usecases/survey/add-survey'
 import env from '@/main/config/env'
 import type { Collection } from 'mongodb'
 

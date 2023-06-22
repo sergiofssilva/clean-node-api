@@ -1,5 +1,5 @@
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
-import type { AddAccountModel } from '@/domain/usecases/add-account'
+import type { AddAccountModel } from '@/domain/usecases/account/add-account'
 import request from 'supertest'
 import app from '@/main/config/app'
 import env from '@/main/config/env'
