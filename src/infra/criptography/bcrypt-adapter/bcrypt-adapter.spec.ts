@@ -4,10 +4,10 @@ import bcrypt from 'bcrypt'
 
 jest.mock('bcrypt', () => ({
   async hash (): Promise<string> {
-    return await new Promise(resolve => { resolve('hashed_value') })
+    return await Promise.resolve('hashed_value')
   },
   async compare (): Promise<boolean> {
-    return await new Promise(resolve => { resolve(true) })
+    return await Promise.resolve(true)
   }
 }))
 
@@ -56,7 +56,7 @@ describe('Bcrypt Adapter', () => {
     test('Should return false when compare fails', async () => {
       const sut = makeSut()
       const compareSpy = jest.spyOn(bcrypt, 'compare') as unknown as jest.Mock<ReturnType<(key: boolean) => Promise<boolean>>>
-      compareSpy.mockReturnValueOnce(new Promise(resolve => { resolve(false) }))
+      compareSpy.mockReturnValueOnce(Promise.resolve(false))
       const compareResult = await sut.compare('any_value', 'any_hash')
       expect(compareResult).toBe(false)
     })

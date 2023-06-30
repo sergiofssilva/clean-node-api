@@ -73,7 +73,7 @@ describe('SignUp Controller', () => {
 
   test('Should return 403 if AddAccount returns null', async () => {
     const { sut, addAccountStub } = makeSut()
-    jest.spyOn(addAccountStub, 'add').mockReturnValueOnce(new Promise(resolve => { resolve(null as any) }))
+    jest.spyOn(addAccountStub, 'add').mockReturnValueOnce(Promise.resolve(null as any))
     const httpResponse = await sut.handle(mockHttpRequest())
     expect(httpResponse).toEqual(forbidden(new EmailInUseError()))
   })
