@@ -1,9 +1,9 @@
 import { SurveyResultMongoRepository } from './survey-result-mongo-repository'
 import { MongoHelper } from '../helpers/mongo-helper'
 import env from '@/main/config/env'
-import type { SaveSurveyResultModel } from '@/domain/usecases/survey-result/save-survey-result'
-import type { AddSurveyModel } from '@/domain/usecases/survey/add-survey'
-import type { AddAccountModel } from '@/domain/usecases/account/add-account'
+import type { SaveSurveyResultParams } from '@/domain/usecases/survey-result/save-survey-result'
+import type { AddSurveyParams } from '@/domain/usecases/survey/add-survey'
+import type { AddAccountParams } from '@/domain/usecases/account/add-account'
 import type { Collection } from 'mongodb'
 
 let surveyCollection: Collection
@@ -14,14 +14,14 @@ const makeSut = (): SurveyResultMongoRepository => {
   return new SurveyResultMongoRepository()
 }
 
-const makeFakeSurveyResultData = (): SaveSurveyResultModel => ({
+const makeFakeSurveyResultData = (): SaveSurveyResultParams => ({
   surveyId: 'any_survey_id',
   accountId: 'any_account_id',
   answer: 'any_answer',
   date: new Date()
 })
 
-const makeFakeSurveyData = (): AddSurveyModel => ({
+const makeFakeSurveyData = (): AddSurveyParams => ({
   question: 'any_question',
   answers: [{
     image: 'any_image',
@@ -30,7 +30,7 @@ const makeFakeSurveyData = (): AddSurveyModel => ({
   date: new Date()
 })
 
-const makeFakeAccountData = (): AddAccountModel => ({
+const makeFakeAccountData = (): AddAccountParams => ({
   name: 'any_name',
   email: 'any_mail@mail.com',
   password: 'any_password'

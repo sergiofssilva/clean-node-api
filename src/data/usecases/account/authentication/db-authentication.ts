@@ -2,7 +2,7 @@ import type {
   LoadAccountByEmailRepository,
   UpdateAccessTokeRepository,
   Authentication,
-  AuthenticationModel,
+  AuthenticationParams,
   HashComparer,
   Encrypter
 } from './db-authentication-protocols'
@@ -15,7 +15,7 @@ export class DbAuthentication implements Authentication {
     private readonly updateAccessTokeRepository: UpdateAccessTokeRepository
   ) {}
 
-  async auth (authentication: AuthenticationModel): Promise<string> {
+  async auth (authentication: AuthenticationParams): Promise<string> {
     const account = await this.loadAccountByEmailRepository.loadByEmail(authentication.email)
     if (account) {
       const { id, password } = account
