@@ -3,7 +3,7 @@ import { MongoHelper } from '../helpers/mongo-helper'
 import env from '@/main/config/env'
 import type { SaveSurveyResultParams } from '@/domain/usecases/survey-result/save-survey-result'
 import type { AddSurveyParams } from '@/domain/usecases/survey/add-survey'
-import type { AddAccountParams } from '@/domain/usecases/account/add-account'
+import { mockAddAccountParams } from '@/domain/test'
 import type { Collection } from 'mongodb'
 
 let surveyCollection: Collection
@@ -30,12 +30,6 @@ const makeFakeSurveyData = (): AddSurveyParams => ({
   date: new Date()
 })
 
-const makeFakeAccountData = (): AddAccountParams => ({
-  name: 'any_name',
-  email: 'any_mail@mail.com',
-  password: 'any_password'
-})
-
 describe('Survey Result MongoRepository', () => {
   beforeAll(async () => {
     await MongoHelper.connect(env.mongoUrl)
@@ -57,7 +51,7 @@ describe('Survey Result MongoRepository', () => {
   describe('save()', () => {
     test('Should add a survey result if its new', async () => {
       const surveyResponse = await surveyCollection.insertOne(makeFakeSurveyData())
-      const accountResponse = await accountCollection.insertOne(makeFakeAccountData())
+      const accountResponse = await accountCollection.insertOne(mockAddAccountParams())
       const sut = makeSut()
       const surveyResult = await sut.save({
         ...makeFakeSurveyResultData(),
@@ -71,7 +65,7 @@ describe('Survey Result MongoRepository', () => {
 
     test('Should update a survey result if its not new', async () => {
       const surveyResponse = await surveyCollection.insertOne(makeFakeSurveyData())
-      const accountResponse = await accountCollection.insertOne(makeFakeAccountData())
+      const accountResponse = await accountCollection.insertOne(mockAddAccountParams())
       const result = await surveyResultCollection.insertOne({
         ...makeFakeSurveyResultData(),
         surveyId: surveyResponse.insertedId.toString(),

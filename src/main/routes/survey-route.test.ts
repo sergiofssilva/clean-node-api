@@ -1,8 +1,8 @@
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
-import type { AddAccountParams } from '@/domain/usecases/account/add-account'
 import request from 'supertest'
 import app from '@/main/config/app'
 import env from '@/main/config/env'
+import { mockAddAccountParams } from '@/domain/test'
 import type { Collection } from 'mongodb'
 import { sign } from 'jsonwebtoken'
 
@@ -14,18 +14,12 @@ const makeFakeSurveyData = (): any => ({
   }]
 })
 
-const makeFakeAddAccountParams = (): AddAccountParams => ({
-  name: 'any_name',
-  email: 'any_email@mail.com',
-  password: 'any_password'
-})
-
 let surveyCollection: Collection
 let accountCollection: Collection
 
 const makeAccessToken = async (): Promise<string> => {
   const response = await accountCollection.insertOne({
-    ...makeFakeAddAccountParams(),
+    ...mockAddAccountParams(),
     role: 'admin'
   })
   const accessToken = sign(response.insertedId.toString(), env.jwtSecret)

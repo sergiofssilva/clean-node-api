@@ -7,7 +7,7 @@ import type {
   HashComparer,
   Encrypter
 } from './db-authentication-protocols'
-import { throwError } from '@/domain/test'
+import { mockAccountModel, throwError } from '@/domain/test'
 
 interface SutTypes {
   sut: DbAuthentication
@@ -35,7 +35,7 @@ const makeSut = (): SutTypes => {
 const makeLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {
   class LoadAccountByEmailRepositoryStub implements LoadAccountByEmailRepository {
     async loadByEmail (email: string): Promise<AccountModel> {
-      return await new Promise(resolve => { resolve(makeFakeAccount()) })
+      return await new Promise(resolve => { resolve(mockAccountModel()) })
     }
   }
   return new LoadAccountByEmailRepositoryStub()
@@ -66,13 +66,6 @@ const makeUpdateAccessTokenRepository = (): UpdateAccessTokeRepository => {
   }
   return new UpdateAccessTokenRepositoryStub()
 }
-
-const makeFakeAccount = (): AccountModel => ({
-  id: 'any_id',
-  name: 'any_name',
-  email: 'any_email@mail.com',
-  password: 'hashed_password'
-})
 
 const makeFakeAuthentication = (): AuthenticationParams => ({
   email: 'any_email@mail.com',
@@ -105,7 +98,7 @@ describe('DbAuthentication Usecase', () => {
     const { sut, hashComparerStub } = makeSut()
     const compareSpy = jest.spyOn(hashComparerStub, 'compare')
     await sut.auth(makeFakeAuthentication())
-    expect(compareSpy).toHaveBeenCalledWith(makeFakeAuthentication().password, makeFakeAccount().password)
+    expect(compareSpy).toHaveBeenCalledWith(makeFakeAuthentication().password, mockAccountModel().password)
   })
 
   test('Should throw if HashComparer throws', async () => {
@@ -126,7 +119,7 @@ describe('DbAuthentication Usecase', () => {
     const { sut, encrypterStub } = makeSut()
     const encryptSpy = jest.spyOn(encrypterStub, 'encrypt')
     await sut.auth(makeFakeAuthentication())
-    expect(encryptSpy).toHaveBeenCalledWith(makeFakeAccount().id)
+    expect(encryptSpy).toHaveBeenCalledWith(mockAccountModel().id)
   })
 
   test('Should throw if Encrypter throws', async () => {
@@ -146,7 +139,7 @@ describe('DbAuthentication Usecase', () => {
     const { sut, updateAccessTokenRepositoryStub } = makeSut()
     const updateSpy = jest.spyOn(updateAccessTokenRepositoryStub, 'updateAccessToken')
     await sut.auth(makeFakeAuthentication())
-    expect(updateSpy).toHaveBeenCalledWith(makeFakeAccount().id, 'any_token')
+    expect(updateSpy).toHaveBeenCalledWith(mockAccountModel().id, 'any_token')
   })
 
   test('Should throw if UpdateAccessTokenRepository throws', async () => {
