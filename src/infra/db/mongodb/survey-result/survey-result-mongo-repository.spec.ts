@@ -1,9 +1,7 @@
 import { SurveyResultMongoRepository } from './survey-result-mongo-repository'
 import { MongoHelper } from '../helpers/mongo-helper'
 import env from '@/main/config/env'
-import type { SaveSurveyResultParams } from '@/domain/usecases/survey-result/save-survey-result'
-import type { AddSurveyParams } from '@/domain/usecases/survey/add-survey'
-import { mockAddAccountParams } from '@/domain/test'
+import { mockAddAccountParams, mockAddSurveyParams, mockSaveSurveyResultParams } from '@/domain/test'
 import type { Collection } from 'mongodb'
 
 let surveyCollection: Collection
@@ -13,22 +11,6 @@ let accountCollection: Collection
 const makeSut = (): SurveyResultMongoRepository => {
   return new SurveyResultMongoRepository()
 }
-
-const makeFakeSurveyResultData = (): SaveSurveyResultParams => ({
-  surveyId: 'any_survey_id',
-  accountId: 'any_account_id',
-  answer: 'any_answer',
-  date: new Date()
-})
-
-const makeFakeSurveyData = (): AddSurveyParams => ({
-  question: 'any_question',
-  answers: [{
-    image: 'any_image',
-    answer: 'any_answer'
-  }],
-  date: new Date()
-})
 
 describe('Survey Result MongoRepository', () => {
   beforeAll(async () => {
@@ -50,24 +32,24 @@ describe('Survey Result MongoRepository', () => {
 
   describe('save()', () => {
     test('Should add a survey result if its new', async () => {
-      const surveyResponse = await surveyCollection.insertOne(makeFakeSurveyData())
+      const surveyResponse = await surveyCollection.insertOne(mockAddSurveyParams())
       const accountResponse = await accountCollection.insertOne(mockAddAccountParams())
       const sut = makeSut()
       const surveyResult = await sut.save({
-        ...makeFakeSurveyResultData(),
+        ...mockSaveSurveyResultParams(),
         surveyId: surveyResponse.insertedId.toString(),
         accountId: accountResponse.insertedId.toString()
       })
       expect(surveyResult).toBeTruthy()
       expect(surveyResult.id).toBeTruthy()
-      expect(surveyResult.answer).toBe(makeFakeSurveyResultData().answer)
+      expect(surveyResult.answer).toBe(mockSaveSurveyResultParams().answer)
     })
 
     test('Should update a survey result if its not new', async () => {
-      const surveyResponse = await surveyCollection.insertOne(makeFakeSurveyData())
+      const surveyResponse = await surveyCollection.insertOne(mockAddSurveyParams())
       const accountResponse = await accountCollection.insertOne(mockAddAccountParams())
       const result = await surveyResultCollection.insertOne({
-        ...makeFakeSurveyResultData(),
+        ...mockSaveSurveyResultParams(),
         surveyId: surveyResponse.insertedId.toString(),
         accountId: accountResponse.insertedId.toString()
       })

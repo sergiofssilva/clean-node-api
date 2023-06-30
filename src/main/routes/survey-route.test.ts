@@ -6,7 +6,7 @@ import { mockAddAccountParams } from '@/domain/test'
 import type { Collection } from 'mongodb'
 import { sign } from 'jsonwebtoken'
 
-const makeFakeSurveyData = (): any => ({
+const mockAddSurveyParamsWithoutDate = (): any => ({
   question: 'any_question',
   answers: [{
     image: 'any_image',
@@ -47,7 +47,7 @@ describe('Survey Routes', () => {
     test('Should return 403 on add survey without accessToken', async () => {
       await request(app)
         .post('/api/survey')
-        .send(makeFakeSurveyData())
+        .send(mockAddSurveyParamsWithoutDate())
         .expect(403)
     })
 
@@ -56,7 +56,7 @@ describe('Survey Routes', () => {
       await request(app)
         .post('/api/survey')
         .set('x-access-token', accessToken)
-        .send(makeFakeSurveyData())
+        .send(mockAddSurveyParamsWithoutDate())
         .expect(204)
     })
   })
@@ -70,7 +70,7 @@ describe('Survey Routes', () => {
 
     test('Should return 200 on load surveys with valid accessToken', async () => {
       const accessToken = await makeAccessToken()
-      await surveyCollection.insertOne(makeFakeSurveyData())
+      await surveyCollection.insertOne(mockAddSurveyParamsWithoutDate())
       await request(app)
         .get('/api/survey')
         .set('x-access-token', accessToken)
