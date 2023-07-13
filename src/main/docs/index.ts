@@ -1,6 +1,6 @@
-import { loginPath } from './paths'
-import { badRequestComponent, serverErrorComponent, unauthorizedComponent } from './components'
-import { accountSchema, loginParamsSchema, errorSchema } from './schemas'
+import paths from './paths'
+import schemas from './schemas'
+import components from './components'
 
 export default {
   openapi: '3.0.0',
@@ -18,18 +18,10 @@ export default {
   }],
   tags: [{
     name: 'Login'
+  }, {
+    name: 'Survey'
   }],
-  paths: {
-    '/login': loginPath
-  },
-  schemas: {
-    account: accountSchema,
-    loginParams: loginParamsSchema,
-    error: errorSchema
-  },
-  components: {
-    badRequest: badRequestComponent,
-    serverError: serverErrorComponent,
-    unauthorized: unauthorizedComponent
-  }
+  paths,
+  schemas,
+  components
 }
