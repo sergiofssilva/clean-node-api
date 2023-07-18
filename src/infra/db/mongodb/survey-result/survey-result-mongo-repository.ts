@@ -1,5 +1,4 @@
-import { QueryBuilder } from '@/infra/db/mongodb/helpers/query-builder'
-import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
+import { QueryBuilder, MongoHelper } from '@/infra/db/mongodb/helpers'
 import type { SaveSurveyResultParams, SaveSurveyResultRepository, SurveyResultModel } from '@/data/usecases/survey-result/save-survey-result/db-save-survey-result-protocols'
 import type { LoadSurveyResultRepository } from '@/data/usecases/survey-result/load-survey-result/db-load-survey-result-protocols'
 import { ObjectId } from 'mongodb'
