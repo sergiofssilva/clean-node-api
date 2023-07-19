@@ -1,6 +1,5 @@
 import { DbLoadSurveyResult } from './db-load-survey-result'
-import type { LoadSurveyResultRepository } from '@/data/protocols/db/survey-result/load-survey-result-repository'
-import type { LoadSurveyByIdRepository } from '@/data/protocols/db/survey/load-survey-by-id-repository'
+import type { LoadSurveyResultRepository, LoadSurveyByIdRepository } from './db-load-survey-result-protocols'
 import { mockLoadSurveyByIdRepository, mockLoadSurveyResultRepository } from '@/data/test'
 import { mockSurveyResultModel, throwError } from '@/domain/test'
 import MockDate from 'mockdate'
@@ -51,6 +50,14 @@ describe('DbLoadSuveyResult Usecase', () => {
     const loadByIdSpy = jest.spyOn(loadSurveyByIdRepositoryStub, 'loadById')
     await sut.load('any_survey_id')
     expect(loadByIdSpy).toHaveBeenCalledWith('any_survey_id')
+  })
+
+  test('Should throw if LoadSurveyByIdRepository throws', async () => {
+    const { sut, loadSurveyResultRepositoryStub, loadSurveyByIdRepositoryStub } = makeSut()
+    jest.spyOn(loadSurveyResultRepositoryStub, 'loadBySurveyId').mockReturnValueOnce(Promise.resolve(null))
+    jest.spyOn(loadSurveyByIdRepositoryStub, 'loadById').mockImplementationOnce(throwError)
+    const promise = sut.load('any_survey_id')
+    await expect(promise).rejects.toThrow()
   })
 
   test('Should return a SurveyResult on success', async () => {
