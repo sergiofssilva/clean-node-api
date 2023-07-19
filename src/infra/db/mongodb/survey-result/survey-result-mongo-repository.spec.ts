@@ -36,19 +36,20 @@ describe('Survey Result MongoRepository', () => {
       const surveyResponse = await surveyCollection.insertOne(mockAddSurveyParams())
       const accountResponse = await accountCollection.insertOne(mockAddAccountParams())
       const sut = makeSut()
-      const surveyResult = await sut.save({
+      await sut.save({
         surveyId: surveyResponse.insertedId.toString(),
         accountId: accountResponse.insertedId.toString(),
         answer: answers[0].answer,
         date: new Date()
       })
-      expect(surveyResult).toBeTruthy()
+      const surveyResult = await surveyResultCollection.findOne({
+        surveyId: surveyResponse.insertedId,
+        accountId: accountResponse.insertedId
+      })
+      expect(surveyResult._id).toBeTruthy()
       expect(surveyResult.surveyId).toEqual(surveyResponse.insertedId)
-      expect(surveyResult.answers[0].answer).toBe(answers[0].answer)
-      expect(surveyResult.answers[0].count).toBe(1)
-      expect(surveyResult.answers[0].percent).toBe(100)
-      expect(surveyResult.answers[1].count).toBe(0)
-      expect(surveyResult.answers[1].percent).toBe(0)
+      expect(surveyResult.accountId).toEqual(accountResponse.insertedId)
+      expect(surveyResult.answer).toBe(answers[0].answer)
     })
 
     test('Should update a survey result if its not new', async () => {
@@ -61,19 +62,18 @@ describe('Survey Result MongoRepository', () => {
         accountId: accountResponse.insertedId
       })
       const sut = makeSut()
-      const surveyResult = await sut.save({
+      await sut.save({
         surveyId: surveyResponse.insertedId.toString(),
         accountId: accountResponse.insertedId.toString(),
         answer: answers[1].answer,
         date: new Date()
       })
+      const surveyResult = await surveyResultCollection.find({
+        surveyId: surveyResponse.insertedId,
+        accountId: accountResponse.insertedId
+      }).toArray()
       expect(surveyResult).toBeTruthy()
-      expect(surveyResult.surveyId).toEqual(surveyResponse.insertedId)
-      expect(surveyResult.answers[0].answer).toBe(answers[1].answer)
-      expect(surveyResult.answers[0].count).toBe(1)
-      expect(surveyResult.answers[0].percent).toBe(100)
-      expect(surveyResult.answers[1].count).toBe(0)
-      expect(surveyResult.answers[1].percent).toBe(0)
+      expect(surveyResult.length).toBe(1)
     })
   })
 
