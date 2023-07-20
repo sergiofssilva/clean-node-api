@@ -127,6 +127,11 @@ body: {
 }
 ```
 
+`GET /survey/:surveyId/results`
+```
+body: <empty>
+```
+
 
 <!-- CONTRIBUTING -->
 ## Contributing
