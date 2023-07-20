@@ -1,6 +1,6 @@
 import type { AddSurvey, AddSurveyParams } from '@/domain/usecases/survey/add-survey'
 import type { LoadSurveys } from '@/domain/usecases/survey/load-surveys'
-import type { LoadSurveyById } from '@/domain/usecases/survey/load-surveys-by-id'
+import type { LoadSurveyById } from '@/domain/usecases/survey/load-survey-by-id'
 import type { SurveyModel } from '@/domain/models/survey'
 import { mockSurveyModels, mockSurveyModel } from '@/domain/test'
 
