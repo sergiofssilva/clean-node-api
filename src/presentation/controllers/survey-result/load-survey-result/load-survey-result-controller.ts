@@ -1,5 +1,6 @@
-import { ok, serverError } from '@/presentation/helpers/http/http-helper'
+import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 import type { Controller, HttpRequest, HttpResponse, LoadSurveyResult, LoadSurveyById } from './load-survey-result-controller-protocols'
+import { InvalidParamError } from '@/presentation/errors'
 
 export class LoadSurveyResultController implements Controller {
   constructor (
@@ -11,7 +12,10 @@ export class LoadSurveyResultController implements Controller {
     try {
       const { params } = httpRequest
       const { surveyId } = params
-      await this.loadSurveyById.loadById(surveyId)
+      const survey = await this.loadSurveyById.loadById(surveyId)
+      if (!survey) {
+        return forbidden(new InvalidParamError('surveyId'))
+      }
       const result = await this.loadSurveyResult.load(surveyId)
       return ok(result)
     } catch (error) {
