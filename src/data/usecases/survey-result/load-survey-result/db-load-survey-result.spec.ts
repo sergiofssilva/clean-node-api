@@ -60,6 +60,13 @@ describe('DbLoadSuveyResult Usecase', () => {
     await expect(promise).rejects.toThrow()
   })
 
+  test('Should return a SurveyResult if LoadSurveyResultRepository returns null', async () => {
+    const { sut, loadSurveyResultRepositoryStub } = makeSut()
+    jest.spyOn(loadSurveyResultRepositoryStub, 'loadBySurveyId').mockReturnValueOnce(Promise.resolve(null))
+    const result = await sut.load('any_survey_id')
+    expect(result).toEqual(mockSurveyResultModel())
+  })
+
   test('Should return a SurveyResult on success', async () => {
     const { sut } = makeSut()
     const result = await sut.load('any_survey_id')
