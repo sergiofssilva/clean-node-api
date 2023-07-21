@@ -2,6 +2,7 @@ import type {
   LoadAccountByEmailRepository,
   UpdateAccessTokeRepository,
   Authentication,
+  AuthenticationModel,
   AuthenticationParams,
   HashComparer,
   Encrypter
@@ -15,15 +16,18 @@ export class DbAuthentication implements Authentication {
     private readonly updateAccessTokeRepository: UpdateAccessTokeRepository
   ) {}
 
-  async auth (authentication: AuthenticationParams): Promise<string> {
+  async auth (authentication: AuthenticationParams): Promise<AuthenticationModel> {
     const account = await this.loadAccountByEmailRepository.loadByEmail(authentication.email)
     if (account) {
-      const { id, password } = account
+      const { id, password, name } = account
       const match = await this.hashComparer.compare(authentication.password, password)
       if (match) {
         const accessToken = await this.encrypter.encrypt(id)
         await this.updateAccessTokeRepository.updateAccessToken(id, accessToken)
-        return accessToken
+        return {
+          accessToken,
+          name
+        }
       }
     }
     return null
