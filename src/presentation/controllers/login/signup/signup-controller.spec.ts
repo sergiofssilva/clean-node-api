@@ -2,7 +2,7 @@ import type { AddAccount, HttpRequest, Validation, Authentication } from './sign
 import { SignUpController } from './signup-controller'
 import { MissingParamError, ServerError, EmailInUseError } from '@/presentation/errors'
 import { ok, badRequest, serverError, forbidden } from '@/presentation/helpers/http/http-helper'
-import { throwError } from '@/domain/test'
+import { mockAuthenticationModel, throwError } from '@/domain/test'
 import { mockAddAccount, mockAuthentication, mockValidation } from '@/presentation/test'
 
 const email = 'valid_email@mail.com'
@@ -98,6 +98,6 @@ describe('SignUp Controller', () => {
   test('Should return 200 if valid credentials are provided', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(mockHttpRequest())
-    expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }))
+    expect(httpResponse).toEqual(ok(mockAuthenticationModel()))
   })
 })
