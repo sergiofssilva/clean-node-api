@@ -15,8 +15,12 @@ export const surveySchema = {
       items: {
         $ref: '#/schemas/surveyAnswer'
       }
+    },
+    didAnswer: {
+      type: 'boolean'
     }
-  }
+  },
+  required: ['id', 'question', 'date', 'answers', 'didAnswer']
 }
 
 export const surveyAnswerSchema = {
