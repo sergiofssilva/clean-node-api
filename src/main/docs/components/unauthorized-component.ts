@@ -1,4 +1,3 @@
-
 export const unauthorizedComponent = {
   description: 'Invalid Credentials',
   content: {

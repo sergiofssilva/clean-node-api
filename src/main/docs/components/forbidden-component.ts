@@ -1,4 +1,3 @@
-
 export const forbiddenComponent = {
   description: 'Access Denied',
   content: {
