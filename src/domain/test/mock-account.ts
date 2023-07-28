@@ -9,6 +9,12 @@ export const mockAddAccountParams = (): AddAccountParams => ({
   password: 'any_password'
 })
 
+export const mockOtherAddAccountParams = (): AddAccountParams => ({
+  name: 'other_name',
+  email: 'other_email@mail.com',
+  password: 'other_password'
+})
+
 export const mockAccountModel = (): AccountModel => ({
   ...mockAddAccountParams(),
   id: 'any_id'

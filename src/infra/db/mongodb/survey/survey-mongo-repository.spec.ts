@@ -59,7 +59,6 @@ describe('SurveyMongoRepository', () => {
       })
       const sut = makeSut()
       const surveys = await sut.loadAll(accountResponse.insertedId.toString())
-      console.log(surveys)
       expect(surveys.length).toBe(2)
       expect(surveys[0].id).toBeTruthy()
       expect(surveys[0].question).toBe('any_question')

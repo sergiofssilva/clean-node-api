@@ -27,7 +27,8 @@ const surveyId = 'any_survey_id'
 const mockHttpRequest = (): HttpRequest => ({
   params: {
     surveyId
-  }
+  },
+  accountId: 'any_account_id'
 })
 
 describe('LoadSurveyResult Controller', () => {
@@ -60,11 +61,12 @@ describe('LoadSurveyResult Controller', () => {
     expect(httpResponse).toEqual(serverError(new Error()))
   })
 
-  test('Should call LoadSurveyResult with correct value', async () => {
+  test('Should call LoadSurveyResult with corrects values', async () => {
     const { sut, loadSurveyResultStub } = makeSut()
     const loadSpy = jest.spyOn(loadSurveyResultStub, 'load')
+    const { accountId } = mockHttpRequest()
     await sut.handle(mockHttpRequest())
-    expect(loadSpy).toHaveBeenCalledWith(surveyId)
+    expect(loadSpy).toHaveBeenCalledWith(surveyId, accountId)
   })
 
   test('Should return 500 if LoadSurveyResult throws', async () => {

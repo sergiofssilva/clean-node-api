@@ -4,8 +4,8 @@ import type { AddSurveyParams } from '@/domain/usecases/survey/add-survey'
 export const mockAddSurveyParams = (): AddSurveyParams => ({
   question: 'any_question',
   answers: [{
-    image: 'any_image',
-    answer: 'any_answer'
+    answer: 'any_answer',
+    image: 'any_image'
   }, {
     answer: 'other_answer'
   }],
