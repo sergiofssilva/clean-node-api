@@ -1,7 +1,7 @@
-import type { AddAccount } from '@/domain/usecases/account/add-account'
-import { AccountMongoRepository } from '@/infra/db/mongodb/account-mongo-repository'
-import { BcryptAdapter } from '@/infra/criptography/bcrypt-adapter'
-import { DbAddAccount } from '@/data/usecases/db-add-account'
+import type { AddAccount } from '@/domain/usecases'
+import { AccountMongoRepository } from '@/infra/db'
+import { BcryptAdapter } from '@/infra/criptography'
+import { DbAddAccount } from '@/data/usecases'
 
 export const makeDbAddAccount = (): AddAccount => {
   const salt = 12
