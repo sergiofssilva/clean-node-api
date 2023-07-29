@@ -1,6 +1,5 @@
-import { adaptRoute } from '@/main/adapters/express-route-adapter'
-import { makeSignUpController } from '@/main/factories/controllers/signup-controller-factory'
-import { makeLoginController } from '@/main/factories/controllers/login-controller-factory'
+import { adaptRoute } from '@/main/adapters'
+import { makeSignUpController, makeLoginController } from '@/main/factories'
 import { type Router } from 'express'
 
 export default (router: Router): void => {

@@ -1,4 +1,4 @@
-import { MongoHelper } from '@/infra/db/mongodb/mongo-helper'
+import { MongoHelper } from '@/infra/db'
 import request from 'supertest'
 import app from '@/main/config/app'
 import env from '@/main/config/env'
