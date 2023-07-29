@@ -2,7 +2,7 @@ import type { AddSurvey, AddSurveyParams } from '@/domain/usecases/survey/add-su
 import type { LoadSurveys } from '@/domain/usecases/survey/load-surveys'
 import type { LoadSurveyById } from '@/domain/usecases/survey/load-survey-by-id'
 import type { SurveyModel } from '@/domain/models/survey'
-import { mockSurveyModels, mockSurveyModel } from '@/domain/test'
+import { mockSurveyModels, mockSurveyModel } from '@/tests/domain/mocks'
 
 export const mockAddSurvey = (): AddSurvey => {
   class AddSurveyStub implements AddSurvey {

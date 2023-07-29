@@ -2,7 +2,7 @@ import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
 import request from 'supertest'
 import app from '@/main/config/app'
 import env from '@/main/config/env'
-import { mockAddAccountParams, mockAddSurveyParams } from '@/domain/test'
+import { mockAddAccountParams, mockAddSurveyParams } from '@/tests/domain/mocks'
 import type { Collection } from 'mongodb'
 import { sign } from 'jsonwebtoken'
 

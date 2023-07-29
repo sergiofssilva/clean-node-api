@@ -3,7 +3,7 @@ import type { LoadSurveyById, HttpRequest, SaveSurveyResult } from './save-surve
 import { InvalidParamError } from '@/presentation/errors'
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { mockLoadSurveyById, mockSaveSurveyResult } from '@/presentation/test'
-import { throwError, mockSaveSurveyResultParams, mockSurveyResultModel } from '@/domain/test'
+import { throwError, mockSaveSurveyResultParams, mockSurveyResultModel } from '@/tests/domain/mocks'
 import MockDate from 'mockdate'
 
 interface SutTypes {

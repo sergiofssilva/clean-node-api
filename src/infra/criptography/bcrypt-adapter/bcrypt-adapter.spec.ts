@@ -1,5 +1,5 @@
 import { BcryptAdapter } from './bcrypt-adapter'
-import { throwError } from '@/domain/test'
+import { throwError } from '@/tests/domain/mocks'
 import bcrypt from 'bcrypt'
 
 jest.mock('bcrypt', () => ({

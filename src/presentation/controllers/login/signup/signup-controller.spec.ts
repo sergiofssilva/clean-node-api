@@ -2,7 +2,7 @@ import type { AddAccount, HttpRequest, Validation, Authentication } from './sign
 import { SignUpController } from './signup-controller'
 import { MissingParamError, ServerError, EmailInUseError } from '@/presentation/errors'
 import { ok, badRequest, serverError, forbidden } from '@/presentation/helpers/http/http-helper'
-import { mockAuthenticationModel, throwError } from '@/domain/test'
+import { mockAuthenticationModel, throwError } from '@/tests/domain/mocks'
 import { mockAddAccount, mockAuthentication, mockValidation } from '@/presentation/test'
 
 const email = 'valid_email@mail.com'

@@ -3,7 +3,7 @@ import type { LoadSurveyResult, HttpRequest, LoadSurveyById } from './load-surve
 import { mockLoadSurveyById, mockLoadSurveyResult } from '@/presentation/test'
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { InvalidParamError } from '@/presentation/errors'
-import { mockSurveyResultModel, throwError } from '@/domain/test'
+import { mockSurveyResultModel, throwError } from '@/tests/domain/mocks'
 import MockDate from 'mockdate'
 
 const makeSut = (): SutTypes => {

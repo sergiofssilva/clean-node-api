@@ -2,7 +2,7 @@ import type { HttpRequest, LoadSurveys } from './load-surveys-controller-protoco
 import { LoadSurveysController } from './load-surveys-controller'
 import { ok, serverError, noContent } from '@/presentation/helpers/http/http-helper'
 import { mockLoadSurveys } from '@/presentation/test'
-import { throwError, mockSurveyModels } from '@/domain/test'
+import { throwError, mockSurveyModels } from '@/tests/domain/mocks'
 import MockDate from 'mockdate'
 
 interface SutTypes {

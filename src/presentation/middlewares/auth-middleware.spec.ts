@@ -2,7 +2,7 @@ import type { HttpRequest, LoadAccountByToken } from './auth-middleware-protocol
 import { AuthMiddleware } from './auth-middleware'
 import { AccessDeniedError, ServerError } from '@/presentation/errors'
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
-import { throwError } from '@/domain/test'
+import { throwError } from '@/tests/domain/mocks'
 import { mockLoadAccountByToken } from '@/presentation/test'
 
 interface SutTypes {

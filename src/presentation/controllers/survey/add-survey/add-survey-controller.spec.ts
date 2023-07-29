@@ -2,7 +2,7 @@ import type { HttpRequest, Validation, AddSurvey } from './add-survey-controller
 import { AddSurveyController } from './add-survey-controller'
 import { badRequest, noContent, serverError } from '@/presentation/helpers/http/http-helper'
 import { MissingParamError } from '@/presentation/errors/missing-param-error'
-import { throwError } from '@/domain/test'
+import { throwError } from '@/tests/domain/mocks'
 import MockDate from 'mockdate'
 import { mockAddSurvey, mockValidation } from '@/presentation/test'
 

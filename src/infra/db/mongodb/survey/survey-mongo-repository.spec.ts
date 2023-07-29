@@ -1,6 +1,6 @@
 import { SurveyMongoRepository } from './survey-mongo-repository'
 import { MongoHelper } from '../helpers/mongo-helper'
-import { mockAddAccountParams, mockAddSurveyParams } from '@/domain/test'
+import { mockAddAccountParams, mockAddSurveyParams } from '@/tests/domain/mocks'
 import env from '@/main/config/env'
 import type { Collection } from 'mongodb'
 
