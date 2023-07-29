@@ -1,10 +1,11 @@
-import type { HttpRequest, Validation, AddSurvey } from './add-survey-controller-protocols'
-import { AddSurveyController } from './add-survey-controller'
-import { badRequest, noContent, serverError } from '@/presentation/helpers/http/http-helper'
+import { AddSurveyController } from '@/presentation/controllers'
+import type { HttpRequest, Validation } from '@/presentation/protocols'
+import { badRequest, noContent, serverError } from '@/presentation/helpers/http-helper'
 import { MissingParamError } from '@/presentation/errors/missing-param-error'
+import type { AddSurvey } from '@/domain/usecases'
 import { throwError } from '@/tests/domain/mocks'
 import MockDate from 'mockdate'
-import { mockAddSurvey, mockValidation } from '@/presentation/test'
+import { mockAddSurvey, mockValidation } from '@/tests/presentation/mocks'
 
 interface SutTypes {
   sut: AddSurveyController

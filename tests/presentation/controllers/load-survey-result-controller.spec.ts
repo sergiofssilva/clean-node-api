@@ -1,8 +1,9 @@
-import { LoadSurveyResultController } from './load-survey-result-controller'
-import type { LoadSurveyResult, HttpRequest, LoadSurveyById } from './load-survey-result-controller-protocols'
-import { mockLoadSurveyById, mockLoadSurveyResult } from '@/presentation/test'
-import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
+import { LoadSurveyResultController } from '@/presentation/controllers'
+import type { HttpRequest } from '@/presentation/protocols'
 import { InvalidParamError } from '@/presentation/errors'
+import type { LoadSurveyResult, LoadSurveyById } from '@/domain/usecases'
+import { mockLoadSurveyById, mockLoadSurveyResult } from '@/tests/presentation/mocks'
+import { forbidden, ok, serverError } from '@/presentation/helpers/http-helper'
 import { mockSurveyResultModel, throwError } from '@/tests/domain/mocks'
 import MockDate from 'mockdate'
 

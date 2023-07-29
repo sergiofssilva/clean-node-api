@@ -1,7 +1,8 @@
-import type { HttpRequest, LoadSurveys } from './load-surveys-controller-protocols'
-import { LoadSurveysController } from './load-surveys-controller'
-import { ok, serverError, noContent } from '@/presentation/helpers/http/http-helper'
-import { mockLoadSurveys } from '@/presentation/test'
+import { LoadSurveysController } from '@/presentation/controllers'
+import type { HttpRequest } from '@/presentation/protocols'
+import type { LoadSurveys } from '@/domain/usecases'
+import { ok, serverError, noContent } from '@/presentation/helpers/http-helper'
+import { mockLoadSurveys } from '@/tests/presentation/mocks'
 import { throwError, mockSurveyModels } from '@/tests/domain/mocks'
 import MockDate from 'mockdate'
 
