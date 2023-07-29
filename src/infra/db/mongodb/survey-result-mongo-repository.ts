@@ -1,6 +1,7 @@
-import { QueryBuilder, MongoHelper } from '@/infra/db/mongodb/helpers'
-import type { SaveSurveyResultParams, SaveSurveyResultRepository, SurveyResultModel } from '@/data/usecases/survey-result/save-survey-result/db-save-survey-result-protocols'
-import type { LoadSurveyResultRepository } from '@/data/usecases/survey-result/load-survey-result/db-load-survey-result-protocols'
+import { QueryBuilder, MongoHelper } from '@/infra/db'
+import type { SaveSurveyResultRepository, LoadSurveyResultRepository } from '@/data/protocols'
+import type { SaveSurveyResultParams } from '@/domain/usecases'
+import type { SurveyResultModel } from '@/domain/models'
 import { ObjectId } from 'mongodb'
 import round from 'mongo-round'
 

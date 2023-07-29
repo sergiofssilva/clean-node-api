@@ -1,6 +1,5 @@
-import { MongoHelper } from '../helpers/mongo-helper'
-import { AccountMongoRepository } from './account-mongo-repository'
-import type { AccountModel } from '@/domain/models/account'
+import { MongoHelper, AccountMongoRepository } from '@/infra/db'
+import type { AccountModel } from '@/domain/models'
 import { mockAddAccountParams } from '@/tests/domain/mocks'
 import env from '@/main/config/env'
 import type { Collection } from 'mongodb'
