@@ -1,7 +1,7 @@
-import { LogControllerDecorator } from './log-controller-decorator'
-import { ok, serverError } from '@/presentation/helpers/http-helper'
+import { LogControllerDecorator } from '@/main/decorators'
+import type { LogErrorRepository } from '@/data/protocols'
+import { ok, serverError } from '@/presentation/helpers'
 import type { HttpRequest, HttpResponse, Controller } from '@/presentation/protocols'
-import type { LogErrorRepository } from '@/data/protocols/db/log/log-error-repository'
 import { mockAccountModel } from '@/tests/domain/mocks'
 import { mockLogErrorRepository } from '@/tests/data/mocks'
 
