@@ -88,7 +88,7 @@ describe('DbAuthentication Usecase', () => {
     await expect(promise).rejects.toThrow()
   })
 
-  test('Should return an AuthenticationModel if Encrypter succeed', async () => {
+  test('Should return an data if Encrypter succeed', async () => {
     const { sut } = makeSut()
     const authenticationModel = await sut.auth(mockAuthenticationParams())
     expect(authenticationModel).toEqual(mockAuthenticationModel())
