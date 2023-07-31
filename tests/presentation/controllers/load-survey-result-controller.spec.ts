@@ -24,7 +24,7 @@ interface SutTypes {
 }
 
 const surveyId = 'any_survey_id'
-const mockHttpRequest = (): LoadSurveyResultController.Request => ({
+const mockRequest = (): LoadSurveyResultController.Request => ({
   surveyId,
   accountId: 'any_account_id'
 })
@@ -41,7 +41,7 @@ describe('LoadSurveyResult Controller', () => {
   test('Should call LoadSurveyById with correct values', async () => {
     const { sut, loadSurveyByIdStub } = makeSut()
     const loadByIdSpy = jest.spyOn(loadSurveyByIdStub, 'loadById')
-    const request = mockHttpRequest()
+    const request = mockRequest()
     await sut.handle(request)
     expect(loadByIdSpy).toHaveBeenCalledWith(surveyId)
   })
@@ -49,7 +49,7 @@ describe('LoadSurveyResult Controller', () => {
   test('Should return 403 if LoadSurveyById returns null', async () => {
     const { sut, loadSurveyByIdStub } = makeSut()
     jest.spyOn(loadSurveyByIdStub, 'loadById').mockReturnValueOnce(Promise.resolve(null))
-    const request = mockHttpRequest()
+    const request = mockRequest()
     const httpResponse = await sut.handle(request)
     expect(httpResponse).toEqual(forbidden(new InvalidParamError('surveyId')))
   })
@@ -57,7 +57,7 @@ describe('LoadSurveyResult Controller', () => {
   test('Should return 500 if LoadSurveyById throws', async () => {
     const { sut, loadSurveyByIdStub } = makeSut()
     jest.spyOn(loadSurveyByIdStub, 'loadById').mockImplementationOnce(throwError)
-    const request = mockHttpRequest()
+    const request = mockRequest()
     const httpResponse = await sut.handle(request)
     expect(httpResponse).toEqual(serverError(new Error()))
   })
@@ -65,7 +65,7 @@ describe('LoadSurveyResult Controller', () => {
   test('Should call LoadSurveyResult with corrects values', async () => {
     const { sut, loadSurveyResultStub } = makeSut()
     const loadSpy = jest.spyOn(loadSurveyResultStub, 'load')
-    const request = mockHttpRequest()
+    const request = mockRequest()
     const { accountId } = request
     await sut.handle(request)
     expect(loadSpy).toHaveBeenCalledWith(surveyId, accountId)
@@ -74,14 +74,14 @@ describe('LoadSurveyResult Controller', () => {
   test('Should return 500 if LoadSurveyResult throws', async () => {
     const { sut, loadSurveyResultStub } = makeSut()
     jest.spyOn(loadSurveyResultStub, 'load').mockImplementationOnce(throwError)
-    const request = mockHttpRequest()
+    const request = mockRequest()
     const httpResponse = await sut.handle(request)
     expect(httpResponse).toEqual(serverError(new Error()))
   })
 
   test('Should return 200 on success', async () => {
     const { sut } = makeSut()
-    const request = mockHttpRequest()
+    const request = mockRequest()
     const httpResponse = await sut.handle(request)
     expect(httpResponse).toEqual(ok(mockSurveyResultModel()))
   })
