@@ -1,10 +1,10 @@
-import type { AddSurvey, AddSurveyParams, LoadSurveys, LoadSurveyById } from '@/domain/usecases'
+import type { AddSurvey, LoadSurveys, LoadSurveyById } from '@/domain/usecases'
 import type { SurveyModel } from '@/domain/models'
 import { mockSurveyModels, mockSurveyModel } from '@/tests/domain/mocks'
 
 export const mockAddSurvey = (): AddSurvey => {
   class AddSurveyStub implements AddSurvey {
-    async add (data: AddSurveyParams): Promise<void> {}
+    async add (data: AddSurvey.Params): Promise<void> {}
   }
   return new AddSurveyStub()
 }
