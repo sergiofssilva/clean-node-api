@@ -1,6 +1,4 @@
-import type { AddSurveyRepository } from '@/data/protocols/db/survey/add-survey-repository'
-import type { LoadSurveyByIdRepository } from '@/data/protocols/db/survey/load-survey-by-id-repository'
-import type { LoadSurveysRepository } from '@/data/protocols/db/survey/load-surveys-repository'
+import type { AddSurveyRepository, LoadSurveyByIdRepository, LoadSurveysRepository } from '@/data/protocols'
 import type { AddSurveyParams } from '@/domain/usecases/add-survey'
 import type { SurveyModel } from '@/domain/models/survey'
 import { mockSurveyModel, mockSurveyModels } from '@/tests/domain/mocks'
