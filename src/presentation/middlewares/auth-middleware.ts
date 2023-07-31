@@ -27,6 +27,6 @@ export class AuthMiddleware implements Middleware {
 
 export namespace AuthMiddleware {
   export type Request = {
-    accessToken: string
+    accessToken?: string
   }
 }
