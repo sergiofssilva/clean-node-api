@@ -1,5 +1,5 @@
 import type { AccountModel } from '@/domain/models'
-import type { AddAccountParams } from '@/domain/usecases'
+import type { AddAccount } from '@/domain/usecases'
 import type { AddAccountRepository } from '@/data/protocols/db/account/add-account-repository'
 import type { LoadAccountByEmailRepository } from '@/data/protocols/db/account/load-account-by-email-repository'
 import type { LoadAccountByTokenRepository } from '@/data/protocols/db/account/load-account-by-token-repository'
@@ -8,7 +8,7 @@ import { mockAccountModel } from '@/tests/domain/mocks'
 
 export const mockAddAccountRepository = (): AddAccountRepository => {
   class AddAccountRepositoryStub implements AddAccountRepository {
-    async add (accountData: AddAccountParams): Promise<AccountModel> {
+    async add (accountData: AddAccount.Params): Promise<AccountModel> {
       return await Promise.resolve(mockAccountModel())
     }
   }
