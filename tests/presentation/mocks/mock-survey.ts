@@ -1,7 +1,5 @@
-import type { AddSurvey, AddSurveyParams } from '@/domain/usecases/survey/add-survey'
-import type { LoadSurveys } from '@/domain/usecases/survey/load-surveys'
-import type { LoadSurveyById } from '@/domain/usecases/survey/load-survey-by-id'
-import type { SurveyModel } from '@/domain/models/survey'
+import type { AddSurvey, AddSurveyParams, LoadSurveys, LoadSurveyById } from '@/domain/usecases'
+import type { SurveyModel } from '@/domain/models'
 import { mockSurveyModels, mockSurveyModel } from '@/tests/domain/mocks'
 
 export const mockAddSurvey = (): AddSurvey => {

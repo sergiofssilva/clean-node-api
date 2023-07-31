@@ -1,5 +1,5 @@
 import type { SurveyModel } from '@/domain/models/survey'
-import type { AddSurveyParams } from '@/domain/usecases/survey/add-survey'
+import type { AddSurveyParams } from '@/domain/usecases/add-survey'
 
 export const mockAddSurveyParams = (): AddSurveyParams => ({
   question: 'any_question',

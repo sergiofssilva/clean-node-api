@@ -1,7 +1,5 @@
 import type { AccountModel, AuthenticationModel } from '@/domain/models'
-import type { Authentication, AuthenticationParams } from '@/domain/usecases/account/authentication'
-import type { LoadAccountByToken } from '@/domain/usecases/account/load-account-by-token'
-import type { AddAccount, AddAccountParams } from '@/domain/usecases'
+import type { Authentication, AuthenticationParams, LoadAccountByToken, AddAccount, AddAccountParams } from '@/domain/usecases'
 import { mockAccountModel, mockAuthenticationModel } from '@/tests/domain/mocks'
 
 export const mockAddAccount = (): AddAccount => {
