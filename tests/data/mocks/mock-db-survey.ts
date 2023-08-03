@@ -1,5 +1,4 @@
 import type { AddSurveyRepository, LoadSurveyByIdRepository, LoadSurveysRepository } from '@/data/protocols'
-import type { SurveyModel } from '@/domain/models/survey'
 import { mockSurveyModel, mockSurveyModels } from '@/tests/domain/mocks'
 
 export const mockAddSurveyRepository = (): AddSurveyRepository => {
@@ -21,7 +20,7 @@ export const mockLoadSurveyByIdRepository = (): LoadSurveyByIdRepository => {
 
 export const mockLoadSurveyRepository = (): LoadSurveysRepository => {
   class LoadSurveyRepositoryStub implements LoadSurveysRepository {
-    async loadAll (accountId: string): Promise<SurveyModel[]> {
+    async loadAll (accountId: string): Promise<LoadSurveysRepository.Result> {
       return await Promise.resolve(mockSurveyModels())
     }
   }
