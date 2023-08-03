@@ -1,5 +1,4 @@
 import { MongoHelper, AccountMongoRepository } from '@/infra/db'
-import type { AccountModel } from '@/domain/models'
 import { mockAddAccountParams } from '@/tests/domain/mocks'
 import env from '@/main/config/env'
 import type { Collection } from 'mongodb'
@@ -71,7 +70,7 @@ describe('Account Mongo Repository', () => {
       const sut = makeSut()
       const result = await accountCollection.insertOne(mockAddAccountParams())
       await sut.updateAccessToken(result.insertedId.toString(), 'any_token')
-      const account = await accountCollection.findOne<AccountModel>({ _id: result.insertedId })
+      const account = await accountCollection.findOne({ _id: result.insertedId })
       expect(account).toBeTruthy()
       expect(account?.accessToken).toBe('any_token')
     })

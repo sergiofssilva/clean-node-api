@@ -11,7 +11,7 @@ export const mockAddSurvey = (): AddSurvey => {
 export const mockLoadSurveys = (): LoadSurveys => {
   class LoadSurveysStub implements LoadSurveys {
     async load (accountId: string): Promise<LoadSurveys.Result> {
-      return await Promise.resolve(mockSurveyModels())
+      return Promise.resolve(mockSurveyModels())
     }
   }
   return new LoadSurveysStub()
@@ -20,7 +20,7 @@ export const mockLoadSurveys = (): LoadSurveys => {
 export const mockLoadSurveyById = (): LoadSurveyById => {
   class LoadSurveyByIdStub implements LoadSurveyById {
     async loadById (id: string): Promise<LoadSurveyById.Result> {
-      return await Promise.resolve(mockSurveyModel())
+      return Promise.resolve(mockSurveyModel())
     }
   }
   return new LoadSurveyByIdStub()
