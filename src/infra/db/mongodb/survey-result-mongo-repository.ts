@@ -1,12 +1,10 @@
 import { QueryBuilder, MongoHelper } from '@/infra/db'
 import type { SaveSurveyResultRepository, LoadSurveyResultRepository } from '@/data/protocols'
-import type { SaveSurveyResultParams } from '@/domain/usecases'
-import type { SurveyResultModel } from '@/domain/models'
 import { ObjectId } from 'mongodb'
 import round from 'mongo-round'
 
 export class SurveyResultMongoRepository implements SaveSurveyResultRepository, LoadSurveyResultRepository {
-  async save (data: SaveSurveyResultParams): Promise<void> {
+  async save (data: SaveSurveyResultRepository.Params): Promise<void> {
     const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     await surveyResultCollection.findOneAndUpdate({
       surveyId: new ObjectId(data.surveyId),
@@ -182,7 +180,7 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository, 
         answers: '$answers'
       })
       .build()
-    const surveyResult = await surveyResultCollection.aggregate<SurveyResultModel>(query).toArray()
+    const surveyResult = await surveyResultCollection.aggregate<LoadSurveyResultRepository.Result>(query).toArray()
     return surveyResult.length ? surveyResult[0] : null
   }
 }
