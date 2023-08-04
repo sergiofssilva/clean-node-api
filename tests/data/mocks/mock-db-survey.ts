@@ -1,4 +1,4 @@
-import type { AddSurveyRepository, LoadSurveyByIdRepository, LoadSurveysRepository } from '@/data/protocols'
+import type { AddSurveyRepository, LoadSurveyByIdRepository, LoadSurveysRepository, CheckSurveyByIdRepository } from '@/data/protocols'
 import { mockSurveyModel, mockSurveyModels } from '@/tests/domain/mocks'
 
 export const mockAddSurveyRepository = (): AddSurveyRepository => {
@@ -25,4 +25,13 @@ export const mockLoadSurveyRepository = (): LoadSurveysRepository => {
     }
   }
   return new LoadSurveyRepositoryStub()
+}
+
+export const mockCheckSurveyByIdRepository = (): CheckSurveyByIdRepository => {
+  class CheckSurveyByIdRepositoryStub implements CheckSurveyByIdRepository {
+    async checkById (id: string): Promise<CheckSurveyByIdRepository.Result> {
+      return Promise.resolve(true)
+    }
+  }
+  return new CheckSurveyByIdRepositoryStub()
 }
