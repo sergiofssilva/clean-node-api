@@ -2,7 +2,6 @@ import { DbCheckSurveyById } from '@/data/usecases'
 import type { CheckSurveyByIdRepository } from '@/data/protocols'
 import { mockCheckSurveyByIdRepository } from '@/tests/data/mocks'
 import { throwError } from '@/tests/domain/mocks'
-import MockDate from 'mockdate'
 
 interface SutTypes {
   sut: DbCheckSurveyById
@@ -19,19 +18,18 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbLoadSurveyById', () => {
-  beforeAll(() => {
-    MockDate.set(new Date())
-  })
-
-  afterAll(() => {
-    MockDate.reset()
-  })
-
   test('Should call CheckSurveyByIdRepository with correct values', async () => {
     const { sut, checkSurveyByIdRepositoryStub } = makeSut()
     const checkByIdSpy = jest.spyOn(checkSurveyByIdRepositoryStub, 'checkById')
     await sut.checkById('any_id')
     expect(checkByIdSpy).toHaveBeenCalledWith('any_id')
+  })
+
+  test('Should return false if CheckSurveyByIdRepository returns false', async () => {
+    const { sut, checkSurveyByIdRepositoryStub } = makeSut()
+    jest.spyOn(checkSurveyByIdRepositoryStub, 'checkById').mockReturnValue(Promise.resolve(false))
+    const exists = await sut.checkById('any_id')
+    expect(exists).toBe(false)
   })
 
   test('Should return true on success', async () => {
