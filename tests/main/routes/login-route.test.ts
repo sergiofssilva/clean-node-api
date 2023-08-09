@@ -1,7 +1,10 @@
-import { MongoHelper } from '@/infra/db'
-import app from '@/main/config/app'
+import { setupApp } from '@/main/config/app'
 import env from '@/main/config/env'
+import { MongoHelper } from '@/infra/db'
+import type { Express } from 'express'
 import request from 'supertest'
+
+let app: Express
 
 const makeSignUpAccount = (): any => ({
   name: 'Sergio',
@@ -12,6 +15,7 @@ const makeSignUpAccount = (): any => ({
 
 describe('Login Routes', () => {
   beforeAll(async () => {
+    app = await setupApp()
     await MongoHelper.connect(env.mongoUrl)
   })
 

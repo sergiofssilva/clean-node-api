@@ -1,10 +1,13 @@
-import { MongoHelper } from '@/infra/db'
-import request from 'supertest'
-import app from '@/main/config/app'
-import env from '@/main/config/env'
 import { mockAddAccountParams, mockAddSurveyParams } from '@/tests/domain/mocks'
+import env from '@/main/config/env'
+import { setupApp } from '@/main/config/app'
+import { MongoHelper } from '@/infra/db'
 import type { Collection } from 'mongodb'
 import { sign } from 'jsonwebtoken'
+import type { Express } from 'express'
+import request from 'supertest'
+
+let app: Express
 
 let surveyCollection: Collection
 let accountCollection: Collection
@@ -21,6 +24,7 @@ const makeAccessToken = async (): Promise<string> => {
 
 describe('Survey Routes', () => {
   beforeAll(async () => {
+    app = await setupApp()
     await MongoHelper.connect(env.mongoUrl)
   })
 
