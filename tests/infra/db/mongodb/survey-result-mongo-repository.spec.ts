@@ -157,7 +157,6 @@ describe('Survey Result MongoRepository', () => {
       }])
       const sut = makeSut()
       const surveyResult = await sut.loadBySurveyId(surveyId.toString(), noneAccountResponse.insertedId.toString())
-      console.log(surveyResult)
       expect(surveyResult).toBeTruthy()
       expect(surveyResult.surveyId).toEqual(surveyResponse.insertedId)
       expect(surveyResult.answers[0].count).toBe(1)

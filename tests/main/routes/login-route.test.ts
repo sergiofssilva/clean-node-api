@@ -1,10 +1,14 @@
+import { mockAddAccountParams } from '@/tests/domain/mocks'
 import { setupApp } from '@/main/config/app'
 import env from '@/main/config/env'
 import { MongoHelper } from '@/infra/db'
 import type { Express } from 'express'
+import type { Collection } from 'mongodb'
 import request from 'supertest'
+import { hash } from 'bcrypt'
 
 let app: Express
+let accountCollection: Collection
 
 const makeSignUpAccount = (): any => ({
   name: 'Sergio',
@@ -24,7 +28,7 @@ describe('Login Routes', () => {
   })
 
   beforeEach(async () => {
-    const accountCollection = await MongoHelper.getCollection('accounts')
+    accountCollection = await MongoHelper.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
 
@@ -39,18 +43,18 @@ describe('Login Routes', () => {
 
   describe('POST /login', () => {
     test('Should return 200 on success', async () => {
+      const password = await hash('123', 12)
+      await accountCollection.insertOne({
+        ...mockAddAccountParams(),
+        password
+      })
       await request(app)
-        .post('/api/signup')
-        .send(makeSignUpAccount())
-        .then(async () => {
-          await request(app)
-            .post('/api/login')
-            .send({
-              email: 'sergio.ecomp@gmail.com',
-              password: '123'
-            })
-            .expect(200)
+        .post('/api/login')
+        .send({
+          email: mockAddAccountParams().email,
+          password: '123'
         })
+        .expect(200)
     })
 
     test('Should return 401 on authentication fail', async () => {
