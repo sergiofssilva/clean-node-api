@@ -78,5 +78,17 @@ describe('Login GraphQL', () => {
       expect(result.data.signUp.accessToken).toBeTruthy()
       expect(result.data.signUp.name).toBe(name)
     })
+
+    test('Should return an error on if the received email is already in use', async () => {
+      const { password } = mockAddAccountParams()
+      await accountCollection.insertOne(mockAddAccountParams())
+      const result = await setupApolloServer().executeOperation({
+        query: signUpMutation,
+        variables: { ...mockAddAccountParams(), passwordConfirmation: password }
+      })
+      expect(result.errors).toBeTruthy()
+      expect(result.errors[0].message).toBe('The received email is already in use')
+      expect(result.data).toBeFalsy()
+    })
   })
 })
