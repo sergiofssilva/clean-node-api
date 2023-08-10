@@ -8,5 +8,6 @@ let schema = makeExecutableSchema({ resolvers, typeDefs })
 schema = authDirectiveTransformer(schema)
 
 export const setupApolloServer = (): ApolloServer => new ApolloServer({
-  schema
+  schema,
+  context: ({ req }) => ({ req })
 })
