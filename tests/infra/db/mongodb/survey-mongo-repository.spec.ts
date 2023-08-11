@@ -24,11 +24,11 @@ describe('SurveyMongoRepository', () => {
   })
 
   beforeEach(async () => {
-    surveyCollection = await MongoHelper.getCollection('surveys')
+    surveyCollection = MongoHelper.getCollection('surveys')
     await surveyCollection.deleteMany({})
-    surveyResultCollection = await MongoHelper.getCollection('surveyResults')
+    surveyResultCollection = MongoHelper.getCollection('surveyResults')
     await surveyResultCollection.deleteMany({})
-    accountCollection = await MongoHelper.getCollection('account')
+    accountCollection = MongoHelper.getCollection('account')
     await accountCollection.deleteMany({})
   })
 
@@ -58,7 +58,7 @@ describe('SurveyMongoRepository', () => {
         date: new Date()
       })
       const sut = makeSut()
-      const surveys = await sut.loadAll(accountResponse.insertedId.toString())
+      const surveys = await sut.loadAll(accountResponse.insertedId.toHexString())
       expect(surveys.length).toBe(2)
       expect(surveys[0].id).toBeTruthy()
       expect(surveys[0].question).toBe('any_question')
@@ -79,7 +79,7 @@ describe('SurveyMongoRepository', () => {
     test('Should load a survey by an id', async () => {
       const result = await surveyCollection.insertOne(mockAddSurveyParams())
       const sut = makeSut()
-      const survey = await sut.loadById(result.insertedId.toString())
+      const survey = await sut.loadById(result.insertedId.toHexString())
       expect(survey).toBeTruthy()
       expect(survey.id).toBeTruthy()
     })
@@ -95,7 +95,7 @@ describe('SurveyMongoRepository', () => {
     test('Should return true if survey exists', async () => {
       const result = await surveyCollection.insertOne(mockAddSurveyParams())
       const sut = makeSut()
-      const exists = await sut.checkById(result.insertedId.toString())
+      const exists = await sut.checkById(result.insertedId.toHexString())
       expect(exists).toBe(true)
     })
 

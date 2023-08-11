@@ -23,7 +23,7 @@ const makeAccessToken = async (): Promise<string> => {
     ...mockAddAccountParams(),
     role: 'admin'
   })
-  const accessToken = sign(response.insertedId.toString(), env.jwtSecret)
+  const accessToken = sign(response.insertedId.toHexString(), env.jwtSecret)
   await accountCollection.updateOne({ _id: response.insertedId }, { $set: { accessToken } })
   return accessToken
 }
@@ -38,8 +38,8 @@ describe('Survey GraphQL', () => {
   })
 
   beforeEach(async () => {
-    surveyCollection = await MongoHelper.getCollection('surveys')
-    accountCollection = await MongoHelper.getCollection('accounts')
+    surveyCollection = MongoHelper.getCollection('surveys')
+    accountCollection = MongoHelper.getCollection('accounts')
     await surveyCollection.deleteMany({})
     await accountCollection.deleteMany({})
   })

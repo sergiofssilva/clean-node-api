@@ -14,7 +14,7 @@ const makeAccessToken = async (): Promise<string> => {
     ...mockAddAccountParams(),
     role: 'admin'
   })
-  const accessToken = sign(response.insertedId.toString(), env.jwtSecret)
+  const accessToken = sign(response.insertedId.toHexString(), env.jwtSecret)
   await accountCollection.updateOne({ _id: response.insertedId }, { $set: { accessToken } })
   return accessToken
 }
@@ -29,8 +29,8 @@ describe('SurveyResult GraphQL', () => {
   })
 
   beforeEach(async () => {
-    surveyCollection = await MongoHelper.getCollection('surveys')
-    accountCollection = await MongoHelper.getCollection('accounts')
+    surveyCollection = MongoHelper.getCollection('surveys')
+    accountCollection = MongoHelper.getCollection('accounts')
     await surveyCollection.deleteMany({})
     await accountCollection.deleteMany({})
   })
@@ -66,7 +66,7 @@ describe('SurveyResult GraphQL', () => {
     test('Should return a SurveyResult with valid credentials', async () => {
       const accessToken = await makeAccessToken()
       const surveyInsertResult = await surveyCollection.insertOne(mockAddSurveyParams())
-      const surveyId = surveyInsertResult.insertedId.toString()
+      const surveyId = surveyInsertResult.insertedId.toHexString()
       const result = await setupApolloServer().executeOperation({
         query: surveyResultQuery,
         variables: { surveyId }
@@ -122,7 +122,7 @@ describe('SurveyResult GraphQL', () => {
       const answer = 'any_answer'
       const accessToken = await makeAccessToken()
       const surveyInsertResult = await surveyCollection.insertOne(mockAddSurveyParams())
-      const surveyId = surveyInsertResult.insertedId.toString()
+      const surveyId = surveyInsertResult.insertedId.toHexString()
       const result = await setupApolloServer().executeOperation({
         query: surveyResultMutation,
         variables: { surveyId, answer }

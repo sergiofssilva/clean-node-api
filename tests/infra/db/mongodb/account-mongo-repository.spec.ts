@@ -19,7 +19,7 @@ describe('Account Mongo Repository', () => {
   })
 
   beforeEach(async () => {
-    accountCollection = await MongoHelper.getCollection('accounts')
+    accountCollection = MongoHelper.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
 
@@ -69,7 +69,7 @@ describe('Account Mongo Repository', () => {
     test('Should update account accessToken on updateAccessToken success', async () => {
       const sut = makeSut()
       const result = await accountCollection.insertOne(mockAddAccountParams())
-      await sut.updateAccessToken(result.insertedId.toString(), 'any_token')
+      await sut.updateAccessToken(result.insertedId.toHexString(), 'any_token')
       const account = await accountCollection.findOne({ _id: result.insertedId })
       expect(account).toBeTruthy()
       expect(account?.accessToken).toBe('any_token')
