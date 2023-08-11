@@ -19,7 +19,7 @@ const makeAccessToken = async (): Promise<string> => {
   return accessToken
 }
 
-describe('Survey GraphQL', () => {
+describe('SurveyResult GraphQL', () => {
   beforeAll(async () => {
     await MongoHelper.connect(env.mongoUrl)
   })
@@ -35,7 +35,7 @@ describe('Survey GraphQL', () => {
     await accountCollection.deleteMany({})
   })
 
-  describe('Survey Result Query', () => {
+  describe('SurveyResult Query', () => {
     const surveyResultQuery = gql`
       query surveyResults ($surveyId: String!) {
         surveyResult (surveyId: $surveyId) {
@@ -90,7 +90,7 @@ describe('Survey GraphQL', () => {
     })
   })
 
-  describe('Survey Result Mutation', () => {
+  describe('SurveyResult Mutation', () => {
     const surveyResultMutation = gql`
       mutation saveSurveyResult ($surveyId: String!, $answer: String!) {
         saveSurveyResult (surveyId: $surveyId, answer: $answer) {
@@ -117,6 +117,33 @@ describe('Survey GraphQL', () => {
       expect(result.errors).toBeTruthy()
       expect(result.errors[0].message).toBe('Access Denied')
       expect(result.data).toBeFalsy()
+    })
+
+    test('Should return a SurveyResult if accessToken is provided', async () => {
+      const answer = 'any_answer'
+      const accessToken = await makeAccessToken()
+      const surveyInsertResult = await surveyCollection.insertOne(mockAddSurveyParams())
+      const surveyId = surveyInsertResult.insertedId.toString()
+      const result = await setupApolloServer().executeOperation({
+        query: surveyResultMutation,
+        variables: { surveyId, answer }
+      }, { req: { headers: { 'x-access-token': accessToken } } } as any)
+      expect(result.errors).toBeFalsy()
+      expect(result.data.saveSurveyResult.surveyId).toBe(surveyId)
+      expect(result.data.saveSurveyResult.question).toBe('any_question')
+      expect(result.data.saveSurveyResult.answers).toEqual([{
+        answer: 'any_answer',
+        image: 'any_image',
+        count: 1,
+        percent: 100,
+        isCurrentAccountAnswer: false
+      }, {
+        answer: 'other_answer',
+        image: null,
+        count: 0,
+        percent: 0,
+        isCurrentAccountAnswer: false
+      }])
     })
   })
 })
