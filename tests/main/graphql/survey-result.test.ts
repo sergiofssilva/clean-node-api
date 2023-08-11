@@ -89,4 +89,34 @@ describe('Survey GraphQL', () => {
       }])
     })
   })
+
+  describe('Survey Result Mutation', () => {
+    const surveyResultMutation = gql`
+      mutation saveSurveyResult ($surveyId: String!, $answer: String!) {
+        saveSurveyResult (surveyId: $surveyId, answer: $answer) {
+          surveyId
+          question
+          date
+          answers {
+            image
+            answer
+            count
+            percent
+            isCurrentAccountAnswer
+          }
+        } 
+      }
+    `
+    test('Should return an AccessDenied Error if no token is provided', async () => {
+      const surveyId = 'any_id'
+      const answer = 'any_answer'
+      const result = await setupApolloServer().executeOperation({
+        query: surveyResultMutation,
+        variables: { surveyId, answer }
+      })
+      expect(result.errors).toBeTruthy()
+      expect(result.errors[0].message).toBe('Access Denied')
+      expect(result.data).toBeFalsy()
+    })
+  })
 })
