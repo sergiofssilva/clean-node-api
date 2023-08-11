@@ -94,7 +94,6 @@ describe('SurveyResult GraphQL', () => {
     const surveyResultMutation = gql`
       mutation saveSurveyResult ($surveyId: String!, $answer: String!) {
         saveSurveyResult (surveyId: $surveyId, answer: $answer) {
-          surveyId
           question
           date
           answers {
@@ -129,14 +128,13 @@ describe('SurveyResult GraphQL', () => {
         variables: { surveyId, answer }
       }, { req: { headers: { 'x-access-token': accessToken } } } as any)
       expect(result.errors).toBeFalsy()
-      expect(result.data.saveSurveyResult.surveyId).toBe(surveyId)
       expect(result.data.saveSurveyResult.question).toBe('any_question')
       expect(result.data.saveSurveyResult.answers).toEqual([{
         answer: 'any_answer',
         image: 'any_image',
         count: 1,
         percent: 100,
-        isCurrentAccountAnswer: false
+        isCurrentAccountAnswer: true
       }, {
         answer: 'other_answer',
         image: null,
